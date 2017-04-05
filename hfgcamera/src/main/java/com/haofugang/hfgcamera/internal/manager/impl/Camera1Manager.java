@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.haofugang.hfgcamera.internal.utils.Constant.CPBitRate;
+import static com.haofugang.hfgcamera.internal.utils.Constant.FrameRate;
 
 /**
  * Created by memfis on 8/14/16.
@@ -263,7 +264,7 @@ public class Camera1Manager extends BaseCameraManager<Integer, SurfaceHolder.Cal
             videoRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 
             videoRecorder.setOutputFormat(camcorderProfile.fileFormat);
-            videoRecorder.setVideoFrameRate(camcorderProfile.videoFrameRate);
+            videoRecorder.setVideoFrameRate(camcorderProfile.videoFrameRate/FrameRate);
             videoRecorder.setVideoSize(videoSize.getWidth(), videoSize.getHeight());
             videoRecorder.setVideoEncodingBitRate(camcorderProfile.videoBitRate / CPBitRate);
             videoRecorder.setVideoEncoder(camcorderProfile.videoCodec);
