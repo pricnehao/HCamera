@@ -272,6 +272,8 @@ public final class Camera2Manager extends BaseCameraManager<String, TextureView.
         cameraHandler.handleCamera(cameraDevice);
     }
 
+
+
     @Override
     public boolean handleParameters(ParametersHandler<CaptureRequest.Builder> parameters) {
         try {
@@ -844,5 +846,23 @@ public final class Camera2Manager extends BaseCameraManager<String, TextureView.
 
 
 
+    @Override
+    public void stopRecord() {
+        if (isVideoRecording)
+            backgroundHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    closePreviewSession();
 
+                    if (videoRecorder != null) {
+                        try {
+                            videoRecorder.stop();
+                        } catch (Exception ignore) {
+                        }
+                    }
+                    isVideoRecording = false;
+                    releaseVideoRecorder();
+                }
+            });
+    }
 }

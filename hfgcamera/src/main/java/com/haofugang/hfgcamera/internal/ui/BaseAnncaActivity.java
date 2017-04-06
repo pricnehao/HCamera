@@ -216,7 +216,7 @@ public abstract class BaseAnncaActivity<CameraId> extends AnncaCameraActivity<Ca
 
     @Override
     public void onSettingsClick() {
-        finish();
+        getCameraController().dispatchKeyEvent();
    /*     AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         if (currentMediaActionState == MediaActionSwitchView.ACTION_VIDEO) {
@@ -473,5 +473,10 @@ public abstract class BaseAnncaActivity<CameraId> extends AnncaCameraActivity<Ca
                 newQuality = ((PhotoQualityOption) photoQualities[index]).getMediaQuality();
             }
         };
+    }
+
+    public long getTime(){
+
+        return  cameraControlPanel.getrecordingTime();
     }
 }

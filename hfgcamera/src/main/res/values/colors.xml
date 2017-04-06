@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- app 通用 -->
+    <!--40%的半透明-->
+    <color name="half_transparent">#66000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="titleColor">#FFF9F9F9</color>
+    <color name="line">#FFE9E9E9</color>
+    <color name="pageBgColor">#F0F0F0</color>
+    <color name="black">#000000</color>
+    <color name="bg_Gray">#E5E5E5</color>
+
+    <!--字体颜色-->
+    <color name="greyishBrown">#4A4A4A</color>
+    <color name="warmGrey">#9B9B9B</color>
+    <color name="paleRed">#DD3333</color>
+    <color name="blackTwo">#232323</color>
+    <color name="whiteTwo">#D8D8D8</color>
+    <color name="whiteThree">#DEDEDE</color>
+    <color name="whiteFour">#F6F6F6</color>
+    <color name="whiteFive">#F4F4F4</color>
+    <color name="whiteSix">#EBEBEB</color>
+    <color name="whiteSeven">#F9F9F9</color>
+    <color name="whiteEight">#F5F5F5</color>
+    <color name="whiteNine">#F3F3F3</color>
+    <color name="whiteTransfer">#D9FFFFFF</color>
+
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="consummate_gender_color">#FF6666</color>
+    <color name="publish_tv_border">#979797</color>
+
+    <color name="cutoff_line">#E8E8E8</color>
+    <!-- 融云 -->
+    <color name="group_list_black_textview">#353535</color>
+    <color name="group_list_gray">#999999</color>
+    <color name="group_list_liner">#E4E4E4</color>
+    <!-- actionbar -->
+    <color name="de_draft_color">#CB120F</color>
+    <color name="main_theme_color">#0195ff</color>
+    <color name="video_bg">#66000000</color>
+
+    <color name="po_publish_color">#E0000000</color>
+    <color name="notify_ic_text_icon">#747474</color>
+    <color name="md_grey_300">#E0E0E0</color>
+
+    <color name="no_data_color">#4D000000</color>
+
+    <color name="red_transparent">#e0DD3232</color>
+    <color name="cl_default">#424242</color>
+
+    <color name="top_back_color">#66000000</color>
+    <color name="trabsfer_money_color">#DD3333</color>
+
+    <color name="vibrantGreen">#09BB07</color>
+</resources>

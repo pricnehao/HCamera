@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ abstract public class AnncaCameraActivity<CameraId> extends Activity
     protected void onProcessBundle(Bundle savedInstanceState) {
 
     }
+
 
     @Override
     protected void onResume() {
@@ -193,6 +195,14 @@ abstract public class AnncaCameraActivity<CameraId> extends Activity
     protected void onCameraControllerReady() {
     }
 
-
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && event.getAction() != KeyEvent.ACTION_UP) {
+            cameraController.dispatchKeyEvent();
+            return true;// 不响应按键抬起时的动作
+        }
+        return super.dispatchKeyEvent(event);
+    }
 
 }

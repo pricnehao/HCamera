@@ -55,4 +55,6 @@ public interface CameraManager<CameraId, SurfaceListener, CameraParameters, Came
     boolean handleParameters(ParametersHandler<CameraParameters> parameters);
 
     void handleCamera(CameraHandler<Camera> cameraHandler);
+
+    void stopRecord();
 }

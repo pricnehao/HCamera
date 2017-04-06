@@ -289,7 +289,7 @@ public class CameraControlPanel extends RelativeLayout
 
         cameraSwitchView.setVisibility(View.INVISIBLE);
         mediaActionSwitchView.setVisibility(GONE);
-        settingsButton.setVisibility(GONE);
+        /*settingsButton.setVisibility(GONE);*/
 
         if (recordButtonListener != null)
             recordButtonListener.onStartRecordingButtonPressed();
@@ -415,6 +415,11 @@ public class CameraControlPanel extends RelativeLayout
             alive = false;
 
         }
+    }
+
+    public long getrecordingTime()
+    {
+        return  ALLrecordingTimeSeconds;
     }
 
 }

@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.haofugang.hfgcamera.internal.utils.Constant.CPBitRate;
-import static com.haofugang.hfgcamera.internal.utils.Constant.FrameRate;
 
 /**
  * Created by memfis on 8/14/16.
@@ -186,6 +185,28 @@ public class Camera1Manager extends BaseCameraManager<Integer, SurfaceHolder.Cal
                 }
             });
     }
+    /**
+     * 只停止不进行跳转到播放页面
+     */
+    public void stopRecord() {
+        if (isVideoRecording)
+            backgroundHandler.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                        if (videoRecorder != null) videoRecorder.stop();
+                    } catch (Exception ignore) {
+                        // ignore illegal state.
+                        // appear in case time or file size reach limit and stop already called.
+                    }
+
+                    isVideoRecording = false;
+                    releaseVideoRecorder();
+                }
+            });
+    }
+
 
     @Override
     public void releaseCameraManager() {
@@ -264,14 +285,18 @@ public class Camera1Manager extends BaseCameraManager<Integer, SurfaceHolder.Cal
             videoRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 
             videoRecorder.setOutputFormat(camcorderProfile.fileFormat);
-            videoRecorder.setVideoFrameRate(camcorderProfile.videoFrameRate/FrameRate);
+            //设置视频帧
+            videoRecorder.setVideoFrameRate(camcorderProfile.videoFrameRate);
             videoRecorder.setVideoSize(videoSize.getWidth(), videoSize.getHeight());
+            //设置视频比特率
             videoRecorder.setVideoEncodingBitRate(camcorderProfile.videoBitRate / CPBitRate);
+            //设置视频编码器
             videoRecorder.setVideoEncoder(camcorderProfile.videoCodec);
-
+            //设置音频比特率
             videoRecorder.setAudioEncodingBitRate(camcorderProfile.audioBitRate);
             videoRecorder.setAudioChannels(camcorderProfile.audioChannels);
             videoRecorder.setAudioSamplingRate(camcorderProfile.audioSampleRate);
+            //设置音频编码器
             videoRecorder.setAudioEncoder(camcorderProfile.audioCodec);
 
             videoRecorder.setOutputFile(outputPath.toString());

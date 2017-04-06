@@ -1,6 +1,7 @@
 package com.haofugang.hfgcamera.internal.controller.impl;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Build;
@@ -19,8 +20,10 @@ import com.haofugang.hfgcamera.internal.manager.listener.CameraCloseListener;
 import com.haofugang.hfgcamera.internal.manager.listener.CameraOpenListener;
 import com.haofugang.hfgcamera.internal.manager.listener.CameraPhotoListener;
 import com.haofugang.hfgcamera.internal.manager.listener.CameraVideoListener;
+import com.haofugang.hfgcamera.internal.ui.BaseAnncaActivity;
 import com.haofugang.hfgcamera.internal.ui.view.AutoFitTextureView;
 import com.haofugang.hfgcamera.internal.utils.CameraHelper;
+import com.haofugang.hfgcamera.internal.utils.CustomDialog;
 import com.haofugang.hfgcamera.internal.utils.Size;
 
 import java.io.File;
@@ -40,7 +43,7 @@ public class Camera2Controller implements CameraController<String>,
     private ConfigurationProvider configurationProvider;
     private CameraManager<String, TextureView.SurfaceTextureListener, CaptureRequest.Builder, CameraDevice> camera2Manager;
     private CameraView cameraView;
-
+    private boolean IsonBack = false;
     private File outputFile;
 
     public Camera2Controller(CameraView cameraView, ConfigurationProvider configurationProvider) {
@@ -56,16 +59,62 @@ public class Camera2Controller implements CameraController<String>,
     }
 
     @Override
+    public void dispatchKeyEvent() {
+        if (camera2Manager.isVideoRecording()) {
+
+            new CustomDialog.Builder(cameraView.getActivity())
+                    .setTitle("温馨提示：")
+                    .setMessage("你确定要退出录制？")
+                    .setPositiveButton("确定退出",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    IsonBack = true;
+                                    cameraView.getActivity().onBackPressed();
+                                    arg0.dismiss();
+                                }
+
+                            })
+                    .setNegativeButton("继续录制",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    arg0.dismiss();
+                                }
+
+                            }).create().show();
+        } else {
+            cameraView.getActivity().onBackPressed();
+        }
+    }
+
+
+    @Override
     public void onResume() {
         camera2Manager.openCamera(currentCameraId, this);
     }
 
     @Override
     public void onPause() {
-        if(camera2Manager.isVideoRecording())
-        {
-            Toast.makeText(cameraView.getActivity(),"为了您的隐私，后台不进行录制。", Toast.LENGTH_LONG).show();
-            camera2Manager.stopVideoRecord();
+
+        if (camera2Manager.isVideoRecording()) {
+            if(IsonBack)
+            {
+                camera2Manager.stopRecord();
+                IsonBack =false;
+            }else {
+                if (((BaseAnncaActivity) cameraView.getActivity()).getTime() < 10) {
+                    Toast.makeText(cameraView.getActivity(), "不支持后台录制!且录制时间少于10s，稍后请重新录制！", Toast.LENGTH_LONG).show();
+                    camera2Manager.stopRecord();
+                    cameraView.getActivity().onBackPressed();
+                } else {
+                    Toast.makeText(cameraView.getActivity(), "不支持后台录制！，视频录制停止！", Toast.LENGTH_LONG).show();
+                    camera2Manager.stopVideoRecord();
+                }
+            }
+
         }
         camera2Manager.closeCamera(null);
         cameraView.releaseCameraPreview();

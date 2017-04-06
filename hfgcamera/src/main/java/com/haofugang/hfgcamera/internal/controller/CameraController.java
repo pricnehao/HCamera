@@ -14,6 +14,8 @@ public interface CameraController<CameraId> {
 
     void onCreate(Bundle savedInstanceState);
 
+    void dispatchKeyEvent();
+
     void onResume();
 
     void onPause();
